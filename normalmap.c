@@ -1,6 +1,7 @@
 /*
    normalmap GIMP plugin
 
+   Copyright (C) 2015-2022 Vera Visions LLC
    Copyright (C) 2002-2012 Shawn Kirst <skirst@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -102,7 +103,7 @@ NormalmapVals nmapvals =
    .conversion = CONVERT_NONE,
    .dudv = DUDV_NONE,
    .xinvert = 0,
-   .yinvert = 0,
+   .yinvert = 1,
    .swapRGB = 0,
    .contrast = 0.0,
    .alphamap_id = 0
@@ -141,13 +142,13 @@ static void query(void)
    };
    static gint nargs = sizeof(args) / sizeof(args[0]);
 
-   gimp_install_procedure("plug_in_normalmap",
-                          "Converts image to an RGB normalmap",
-                          "foo!",
-                          "Shawn Kirst",
-                          "Shawn Kirst",
-                          "February 2002",
-                          "<Image>/Filters/Map/Normalmap...",
+   gimp_install_procedure("plug_in_vvnormalmap",
+                          "Converts a heightmap into a RGB normal map",
+                          "https://www.vera-visions.com/",
+                          "Vera Visions LLC",
+                          "Vera Visions LLC, Shawn Kirst",
+                          "March 2022",
+                          "<Image>/Filters/Map/VV Normalmap...",
                           "RGB*",
                           GIMP_PLUGIN,
                           nargs, 0,
@@ -175,8 +176,8 @@ static void run(const gchar *name, gint nparams, const GimpParam *param,
    switch(run_mode)
    {
       case GIMP_RUN_INTERACTIVE:
-         gimp_ui_init("normalmap", 0);
-         gimp_get_data("plug_in_normalmap", &nmapvals);
+         gimp_ui_init("vv_normalmap", 0);
+         gimp_get_data("plug_in_vvnormalmap", &nmapvals);
          if(!normalmap_dialog(drawable))
          {
             gimp_drawable_detach(drawable);
@@ -206,7 +207,7 @@ static void run(const gchar *name, gint nparams, const GimpParam *param,
          }
          break;
       case GIMP_RUN_WITH_LAST_VALS:
-         gimp_get_data("plug_in_normalmap", &nmapvals);
+         gimp_get_data("plug_in_vvnormalmap", &nmapvals);
          break;
       default:
          break;
@@ -223,7 +224,7 @@ static void run(const gchar *name, gint nparams, const GimpParam *param,
       gimp_displays_flush();
 
    if(run_mode == GIMP_RUN_INTERACTIVE)
-      gimp_set_data("plug_in_normalmap", &nmapvals, sizeof(nmapvals));
+      gimp_set_data("plug_in_vvnormalmap", &nmapvals, sizeof(nmapvals));
 
    values[0].data.d_status = status;
 
@@ -1358,9 +1359,9 @@ static gint normalmap_dialog(GimpDrawable *drawable)
       }
    }
 
-   gimp_ui_init("normalmap", TRUE);
+   gimp_ui_init("vv_normalmap", TRUE);
 
-   dialog = gimp_dialog_new("Normalmap", "normalmap",
+   dialog = gimp_dialog_new("VV Normalmap", "vv_normalmap",
                             0, 0, gimp_standard_help_func, 0,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK, GTK_RESPONSE_OK,

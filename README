@@ -1,3 +1,9 @@
+This is a simple fork to make 'Invert-Y' the default option
+for us folks targetting Vulkan/OpenGL.
+It also works alongside the original normalmap plugin.
+
+Original README:
+
 GIMP normalmap plugin
 (C) 2002-2012 Shawn Kirst <skirst@gmail.com>
 ==========================================

@@ -12,13 +12,12 @@ else
 EXT=.exe
 endif
 
-TARGET=normalmap$(EXT)
+TARGET=vv_normalmap$(EXT)
 
 SRCS=normalmap.c preview3d.c scale.c
 OBJS=$(SRCS:.c=.o)
 
-LIBS=$(shell pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0) \
--L/usr/X11R6/lib -lGLEW -lm
+LIBS=$(shell pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0) -lGLEW -lm -lGLU
 
 ifdef VERBOSE
 Q=
